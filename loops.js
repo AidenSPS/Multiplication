@@ -73,7 +73,6 @@ function checkAnswer(){ //This function checks the answer and evaluates the valu
         error = [x,y];
         error.splice(0,1);
         errors.push(error);
-        alert(errors);
         questionNum++;
         wrong = "Incorrect!, "+x+" X "+y+" equals "+product;
         response = wrong;
@@ -119,7 +118,6 @@ function stats() {
 
     //The wrong question string
     let wrongQuestion = document.createElement("p");
-    wrongQuestion.innerText = "You got "+errors.length+" of "+max+" wrong.";
     wrongQuestion.innerText = "You got "+errors.length+" of "+questions+" wrong.";
     document.body.appendChild(wrongQuestion);
     if (highFactor[0] > 0) {
