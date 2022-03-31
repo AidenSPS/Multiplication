@@ -6,8 +6,12 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>Tables Page</h1>
-        <p>This is where we show times tables to study, and ask if they want to run it again.</p>
-        <button onclick="document.location='setup.html'">Start</button>
+        <h1>Tables:</h1>
+        <p>Click the Tables button to see the times table, then click it again and enter a value to see the times tables for that value. Click Restart to retry the quiz</p>
+        <button onclick= "tables()">Tables:</button>
+        <div id="table">
+
+        </div>
+        <button onClick = "restart()" id="restartButton">Restart:</button>
     </body>
 </html>

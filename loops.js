@@ -8,89 +8,152 @@ var x = 0;
 var y = 0;
 var product = 0;
 
-
-function startLoop(){
-    // alert(questions+"-"+max+"-"+min);
-    uiLoop(); //Not displaying the current question. (on question two, is saying Question one of two).
-    askQuestion();
-    forLoop();
-}
-
-function uiLoop(){ //This function loads the page
-    let question = questionNum; 
-    let interface = document.getElementById("interface");
-    let oldButton = document.getElementById("beginQuiz");
+function userDisplay(){ //This function loads the page
+    var interface = document.getElementById("interface");
+    var oldButton = document.getElementById("beginQuiz");
     oldButton.remove();
-
 
     // Question Box aka "Question 1 of 2"
     const questionBox = document.createElement("div");
-    questionBox.innerText = "Question "+question+" of "+questions;
+    questionBox.setAttribute('id','questionBox');
     interface.appendChild(questionBox);
-
 
     // Displaying the question
     const questDisplay = document.createElement("div");
-    questDisplay.innerText = askQuestion(); //This line is where the display of the question resides, takes the second pop-up question from stubArray and displays that, need to do for second value. 
+    questDisplay.setAttribute('id','display');
     interface.appendChild(questDisplay);
-
 
     // Answer Box
     const answerBox = document.createElement("input");
     answerBox.setAttribute('id','answer');
-    interface.appendChild(answerBox);
+    interface.appendChild(answerBox); 
 
     // Displaying the button
-    const button = document.createElement("button");
-    button.setAttribute('id','submit');
-    button.setAttribute('onClick','getAnswer()');
-    button.innerText = "Submit Answer";
-    interface.appendChild(button);
-}
+    let submitButton = document.createElement("button");
+    submitButton.setAttribute('id','submit');
+    submitButton.setAttribute('onClick','checkAnswer()');
+    submitButton.innerText = "Submit Answer";
+    interface.appendChild(submitButton);
+    askQuestion();
 
+    //Response div
+    let responseBox = document.createElement("div");
+    responseBox.setAttribute('id','responseBox');
+    interface.appendChild(responseBox);
+}//Closes uiLoop();
 
-function askQuestion(){//Sets random values for x and y and returns answer when called. The whole point of this function, is to randomize the values and return answer. 
+function askQuestion(){ //asking the question, aka 3x6;
+    let questionBox = document.getElementById("questionBox"); 
+    let questDisplay = document.getElementById("display");
+    questionBox.innerText = "Question "+questionNum+" of "+questions;
     x = Math.floor(Math.random() * (max - min + 1)) + min;
     y = Math.floor(Math.random() * (max - min + 1)) + min;
-    let answer = x + " X " + y +" = ?";
-    let stub = [x,y]; //Stub to display answers, getting two values on load?, not displaying the correct value, the value that is the equation is the second one. 
-    alert(stub);
-    return answer;
-}
+    let questionText = x + " X " + y +" = ?";
+    questDisplay.innerHTML= questionText;
+}//closes askQuestion();
 
-
-function getAnswer(){
-    //alert("Got it!");
-    let answerBox = document.getElementById("answer");
-    let userAnswer = parseInt(answerBox.value);
+function checkAnswer(){ //This function checks the answer and evaluates the value of the input of answerBox, here for the submitButton execution;
+    //alert("Working");
+    let userAnswer = document.getElementById("answer");
+    let answer = parseInt(userAnswer.value);
+    let questionBox = document.getElementById("questionBox");
+    let correct = null;
+    let wrong = null;
+    let responseBox = document.getElementById("responseBox");
+    let response = "";
+    let error = null;
     product = (x * y);
-    if(userAnswer == product){
-        alert("Correct, the answer is "+product);
+    if(answer == product){
+        questionNum++;
+        correct = "Correct, "+x+" X "+y+" equals "+product;
+        response = correct;
+        responseBox.innerHTML = response;
+    }
+    else{
+        error = [x,y];
+        error.splice(0,1);
+        errors.push(error);
+        alert(errors);
+        questionNum++;
+        wrong = "Incorrect!, "+x+" X "+y+" equals "+product;
+        response = wrong;
+        responseBox.innerHTML = response;
+        }
+
+    if (questionNum <= questions){
         askQuestion();
     }
     else{
-        alert("Incorrect, "+x+" X "+y+" = "+product);
-        errors.push([x,y]);
-        askQuestion();
+        interface.setAttribute("class",null);
+        interface.innerHTML = " ";
+        localStorage.setItem('errors',errors);
+        stats();
     }
-    questionNum++;
-    if(questionNum <= questions){
-        uiLoop();
-    }
-    else{
-        interface.innerHTML = "All Done";
-    }
-}
+}//Closes checkAnswer();
 
 
-
-function forLoop(){
-    for (let question = 1; question <= questions; question++) {
-        let error = [0,0,0];
-        if (error[0] > 0) {
-            error.splice(0,1);
-            errors.push(error);
-            alert(errors.join("\n"));
+function stats() {
+    let highFactor = [0, 0];
+    // sample errors array data
+    let errorDist = []
+    // fill errorDist with zeros
+    for (let i = 0; i <= max; i++) {
+        errorDist[i] = 0;
+    }
+    // add error factors to dist
+    for (i = 0; i < errors.length; i++) {
+        errorDist[errors[i][0]]++;
+        errorDist[errors[i][1]]++;
+    }
+    // find greatest number
+    for (let i = max; i > 0; i--) {
+        if (errorDist[i] > highFactor[1]) {
+            highFactor = [i, errorDist[i]];
         }
     }
+  //The string that displays the string of the tables (7*[1...max] = product);
+    let errorString = ""; //Errors String to display the times table
+    for (let i = 0; i < errors.length; i++) {
+        errorString += errors[i][0] + " * " + errors[i][1] + " = " + (errors[i][0] * errors[i][1]) + " (" + errors[i][2] + ")\n";
+    }
+
+    //The wrong question string
+    let wrongQuestion = document.createElement("p");
+    wrongQuestion.innerText = "You got "+errors.length+" of "+max+" wrong.";
+    wrongQuestion.innerText = "You got "+errors.length+" of "+questions+" wrong.";
+    document.body.appendChild(wrongQuestion);
+    if (highFactor[0] > 0) {
+        localStorage.setItem("problemFactor", highFactor[0]);
+    //The biggest problem string
+        let biggestIssue = document.createElement("p");
+        biggestIssue.setAttribute("margin-top", "25px");
+        biggestIssue.innerText = "Your biggest problem factor was " + highFactor[0] + ".";
+        interface.appendChild(biggestIssue);
+    } 
+    else{
+      localStorage.setItem("problemFactor", null);
+    } 
+
+  //The retry button asking the user to retry the quiz.
+    let retry = document.createElement("button");
+    retry.innerText = "Try again";
+    retry.id = "tryAgain";
+    retry.setAttribute("onclick", "retry()");
+    interface.appendChild(retry);
+
+  //The tables button directing the player to go to the times tables
+    let tables = document.createElement("button");
+    tables.setAttribute("id","tablesButton");
+    tables.innerText = "View multiplication tables";
+    tables.setAttribute("onclick", "toTables()");
+    interface.appendChild(tables);
+}
+  //Going to Tables.HTML
+
+function toTables() {
+    document.location = "tables.html";
+}
+
+function retry(){
+    document.location = 'setup.html';
 }
