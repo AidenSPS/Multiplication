@@ -24,17 +24,18 @@ input{
 }
 
 #form{
-    width:200px
-    float:center;
-    text-align:right;
+    width: auto;
+    margin: auto;
+    float: center;
+    text-align: center;
 }
 
 #interface div, #interface input, #interface button {
-    padding:10px;
-    margin:0 auto;
+    padding: 10px;
+    margin: 0 auto;
     width: 100px;
     text-align: center;
-    display:block;
+    display: block;
 }
 
 #interface #button {
@@ -78,4 +79,19 @@ label{
 
 #wrongQuestion{
     border: 2px solid white;
+}
+#max,#min,#questions{
+    margin: auto;
+    display: inline-block;
+}
+#maxLab,#minLab,#questLab{
+    margin: auto;
+    display: inline-block;
+    color: white;
+    padding: 10px;
+}
+#storeInfo{
+    margin: auto;
+    display: inline-block;
+    text-align: center;
 }
