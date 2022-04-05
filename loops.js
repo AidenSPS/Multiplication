@@ -40,7 +40,7 @@ function userDisplay(){ //This function loads the page
     let responseBox = document.createElement("div");
     responseBox.setAttribute('id','responseBox');
     interface.appendChild(responseBox);
-}//Closes uiLoop();
+}//Closes userDisplay();
 
 function askQuestion(){ //asking the question, aka 3x6;
     let questionBox = document.getElementById("questionBox"); 
@@ -69,7 +69,7 @@ function checkAnswer(){ //This function checks the answer and evaluates the valu
         response = correct;
         responseBox.innerHTML = response;
     }
-    else{
+    else {
         error = [x,y];
         error.splice(0,1);
         errors.push(error);
