@@ -52,32 +52,33 @@ button:hover{
 
 h1{
     color: white;
+    background: black;
+    width: auto;
+    opacity: .725;
 }
 
 p{
-    color: white;
-}
-
-#table{
-    color: white;
-}
-#instruct{
     background: black;
     color: white;
     width: auto;
     font-size: 15pt;
-    opacity: .889;
+    opacity: .725;
 }
+
+
 label{
     color: white;
 }
+
 #interface #questionBox{
     color: white;
 }
+
 #interface #display{
     color: white;
     border: 2px solid white;
 }
+
 #interface #responseBox{
     color: white;
     border: 2px solid white;
@@ -86,21 +87,25 @@ label{
 #wrongQuestion{
     border: 2px solid white;
 }
+
 #max,#min,#questions{
     margin: auto;
     display: inline-block;
 }
+
 #maxLab,#minLab,#questLab{
     margin: auto;
     display: inline-block;
     color: white;
     padding: 10px;
 }
+
 #storeInfo{
     margin: auto;
     display: inline-block;
     text-align: center;
 }
+
 #tableTitle{
     background: black;
     opacity: 0.889;
