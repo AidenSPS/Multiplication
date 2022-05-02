@@ -47,24 +47,24 @@ body{
 }
 
 button:hover{
-    background-color: red;
+    background-color: #23503E;
+    color: white;
 }
 
 h1{
     color: white;
-    background: black;
+    background: #23503E;
     width: auto;
     opacity: .725;
 }
 
 p{
-    background: black;
-    color: white;
+    background: #23503E;
     width: auto;
-    font-size: 15pt;
     opacity: .725;
+    font-size: 15pt;
+    color: white;
 }
-
 
 label{
     color: white;
@@ -107,11 +107,12 @@ label{
 }
 
 #tableTitle{
-    background: black;
+    background: #23503E;
     opacity: 0.889;
 }
 
 #table{
     font-size: 14pt;
     padding: 5px;
+    color: white;
 }
